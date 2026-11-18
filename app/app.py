@@ -23,7 +23,7 @@ def index():
         with conn, conn.cursor() as cur:
             cur.execute(
                 "CREATE TABLE IF NOT EXISTS visits ("
-                "id SERIAL PRIMARY KEY, visited at TIMESTAMP DEFAULT now())"
+                "id SERIAL PRIMARY KEY, visited_at TIMESTAMP DEFAULT now())"
             )
             cur.execute("INSERT INTO visits DEFAULT VALUES")
             cur.execute("SELECT count(*) FROM visits")
