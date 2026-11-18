@@ -30,7 +30,7 @@ def index():
             count = cur.fetchone()[0]
     finally:
         conn.close()
-    return f"Hello from Docker! Visits: {count}\n"
+    return f"Hello from Docker, Левакин! Visits: {count}\n"
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
