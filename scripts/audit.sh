@@ -24,14 +24,14 @@ check "MaxAuthTries равен 3" "3" "$(sudo sshd -T | awk '/^maxauthtries/{pri
 
 echo "[2] Межсетевой экран"
 check "Межсетевой экран активен" "active" "$(sudo ufw status | awk '/^Status:/{print $2}')"
-check "Политика incoming = deny" "deny" "$(sudo ufw status verbose | grep 'Default:' | awk -F, '{print $1}' | awk '{print $NF}')"
+check "Политика incoming = deny" "deny" "$(sudo ufw status verbose | grep 'Default:' | awk -F'[ ,]+' '{print $2}')"
 
 echo "[3] Учётные записи"
 awk -F: ' $3>=1000 && $3<65534 {printf " %s (uid=%s)\n",$1,$3}' /etc/passwd
 
 echo "[4] Веб-сервер Nginx"
 check "Nginx активен" "active" "$(systemctl is-active nginx)"
-check "Сайт доступен по HTTPS" "200" "$(curl -k -s -o /dev/null -w "%{http_code}" https://devops.local/)"
+check "Сайт доступен по HTTPS" "200" "$(curl -k -s -o /dev/null -w "%{http_code}" https://127.0.0.1/)"
 
 echo "[5] Контейнеризация"
 check "Служба Docker активна" "active" "$(systemctl is-active docker)"
